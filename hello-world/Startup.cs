@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace hello_world
 {
@@ -24,7 +25,7 @@ namespace hello_world
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHello hello)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHello hello, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -39,6 +40,7 @@ namespace hello_world
             });
             app.Run(async (context) =>
             {
+                logger.LogInformation("Response served.");
                 await context.Response.WriteAsync(hello.sayHello());
             });
         }
