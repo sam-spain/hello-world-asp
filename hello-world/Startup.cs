@@ -20,45 +20,26 @@ namespace hello_world
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
-            services.AddSingleton<IHello, Hello>();
+            services.AddControllers();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHello hello, ILogger<Startup> logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseStaticFiles();
-            app.Map("/test", testPipeline);
-            app.Use(next => async context =>
-            {
-                await context.Response.WriteAsync("Before hello: ");
-                await next.Invoke(context);
-            });
-            app.Run(async (context) =>
-            {
-                logger.LogInformation("Response served.");
-                await context.Response.WriteAsync(hello.sayHello());
-            });
-        }
+            app.UseHttpsRedirection();
 
-        private static void testPipeline(IApplicationBuilder app)
-        {
-            app.MapWhen(context => { return context.Request.Query.ContainsKey("ln"); }, testPipeline1);
-            app.Run(async context =>
-            {
-                await context.Response.WriteAsync("Hello from mapping");
-            });
-        }
+            app.UseRouting();
 
-        private static void testPipeline1(IApplicationBuilder app)
-        {
-            app.Run(async context =>
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                await context.Response.WriteAsync("Hello from second mapping");
+                endpoints.MapControllers();
             });
         }
     }
