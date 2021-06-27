@@ -39,9 +39,18 @@ namespace hello_world
 
         private static void testPipeline(IApplicationBuilder app)
         {
+            app.MapWhen(context => { return context.Request.Query.ContainsKey("ln"); }, testPipeline1);
             app.Run(async context =>
             {
                 await context.Response.WriteAsync("Hello from mapping");
+            });
+        }
+
+        private static void testPipeline1(IApplicationBuilder app)
+        {
+            app.Run(async context =>
+            {
+                await context.Response.WriteAsync("Hello from second mapping");
             });
         }
     }
