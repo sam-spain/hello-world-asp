@@ -31,6 +31,11 @@ namespace hello_world
                 app.UseDeveloperExceptionPage();
             }
             app.Map("/test", testPipeline);
+            app.Use(next => async context =>
+            {
+                await context.Response.WriteAsync("Before hello: ");
+                await next.Invoke(context);
+            });
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync(hello.sayHello());
