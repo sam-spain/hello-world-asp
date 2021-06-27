@@ -30,6 +30,7 @@ namespace hello_world
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles();
             app.Map("/test", testPipeline);
             app.Use(next => async context =>
             {
