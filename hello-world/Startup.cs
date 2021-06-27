@@ -30,9 +30,18 @@ namespace hello_world
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.Map("/test", testPipeline);
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync(hello.sayHello());
+            });
+        }
+
+        private static void testPipeline(IApplicationBuilder app)
+        {
+            app.Run(async context =>
+            {
+                await context.Response.WriteAsync("Hello from mapping");
             });
         }
     }
