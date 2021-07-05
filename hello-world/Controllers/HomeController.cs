@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using hello_world.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,24 @@ namespace hello_world.Controllers
     [Route("Home/Index")]
     public class HomeController : Controller
     {
-        public string Index()
+        public ActionResult Index()
         {
-            return "Hello from home controller";
+            Book book = new Book()
+            {
+                Title = "Learning ASP",
+                Description = "Sam's attempt to learn this stuff",
+                Author = "Andrew Anders",
+                PublishDate = "July, 2021",
+                Price = 35,
+                Image = ""
+            };
+            return View(book);
         }
 
         [Route("about")]
-        public string About()
+        public ActionResult About()
         {
-            return "About us";
+            return View();
         }
 
         [Route("contact")]
