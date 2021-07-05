@@ -12,9 +12,13 @@ namespace hello_world.Controllers
     [Route("Home/Index")]
     public class HomeController : Controller
     {
+
+        
+
         public ActionResult Index()
         {
-            Book book = new Book()
+            List<Book> books = new List<Book>();
+            Book learningAsp = new Book()
             {
                 Title = "Learning ASP",
                 Description = "Sam's attempt to learn this stuff",
@@ -23,7 +27,18 @@ namespace hello_world.Controllers
                 Price = 35,
                 Image = ""
             };
-            return View(book);
+            Book learningSpring = new Book()
+            {
+                Title = "Learning Java Spring",
+                Description = "Sam's attempt build better knowledge of this stuff",
+                Author = "Berty Boblin",
+                PublishDate = "November, 2018",
+                Price = 5,
+                Image = ""
+            };
+            books.Add(learningAsp);
+            books.Add(learningSpring);
+            return View(books);
         }
 
         [Route("about")]
