@@ -15,5 +15,17 @@ namespace hello_world.Controllers
         {
             return "Hello from home controller";
         }
+
+        [Route("about")]
+        public string About()
+        {
+            return "About us";
+        }
+
+        [Route("contact")]
+        public ActionResult Contact()
+        {
+            return View();
+        }
     }
 }
